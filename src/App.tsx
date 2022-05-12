@@ -1,17 +1,70 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import Header from "./components/Header";
 import { GlobalStyle } from "./styles/global";
+import Dashboard from "./components/Dashboard";
+import { createServer } from "miragejs";
 
-const Title = styled.h1`
-  color: red;
-`
+import { useState } from "react";
+import NewTransactionModal from "./components/NewTransactionModal";
 
 function App() {
-  return (
-    <div className="App">
-      <GlobalStyle/>
-      <Title>Teste</Title>
+  // configurando miragejs
 
-    </div>
+  createServer({
+    routes() {
+      this.namespace = "api";
+      this.get("/transactions", () => {
+        return [
+          {
+            id: 1,
+            title: "websites",
+            amount: "1200",
+            type: "deposit",
+            category: "services",
+            createdAt: new Date(),
+          },
+          {
+            id: 2,
+            title: "Renda passiva",
+            amount: "800",
+            type: "deposit",
+            category: "misc",
+            createdAt: new Date(),
+          },
+          {
+            id: 3,
+            title: "Home",
+            amount: "3000",
+            type: "withdrawal",
+            category: "Rent",
+            createdAt: new Date(),
+          },
+        ];
+      });
+    },
+  });
+
+  // configurações modal
+  const [isModalNewTransactionOpen, setIsModalNewTransactionOpen] =
+    useState(false);
+
+  function handleModalNewTransactionOpen() {
+    setIsModalNewTransactionOpen(true);
+  }
+  function handleModalNewTransactionClose() {
+    setIsModalNewTransactionOpen(false);
+  }
+
+  return (
+    <>
+      <GlobalStyle />
+      <Header onNewTransaction={handleModalNewTransactionOpen} />
+      <Dashboard />
+      <NewTransactionModal
+        isOpen={isModalNewTransactionOpen}
+        onRequestClose={handleModalNewTransactionClose}
+      />
+    </>
   );
 }
 
