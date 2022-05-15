@@ -1,6 +1,7 @@
+import { darken, transparentize } from "polished";
 import styled from "styled-components";
 
-export const Container = styled.form`
+export const ContainerForm = styled.form`
     h2{
         font-size: 1.5rem;
         margin-bottom: 1.5rem;
@@ -40,6 +41,56 @@ export const Container = styled.form`
         &:hover{
             filter: brightness(0.9);
         }
+    }
+
+
+`
+
+export const IncomeOutcomeButtonsContainer = styled.div`
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 1rem 0;
+    height: 4rem;
+    gap: 0.5rem;
+
+`
+
+interface IncomeOutcomeButtonProps{
+    isActive: boolean,
+    activeColor: "red" | "green"
+}
+
+const colors={
+    red: "#e52e4d",
+    green: "#33cc95"
+}
+
+export const IncomeOutcomeButton = styled.button<IncomeOutcomeButtonProps>`
+
+    background: ${({isActive, activeColor}) => isActive ? transparentize(0.9, colors[activeColor]): "transparent"};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d7d7d7;
+    border-radius: 0.25rem;
+    transition: border-color 0.1s;
+
+    
+    img{
+        display: inline-block;
+        margin-left: 1rem;
+        height: 20px;
+        width: 20px;
+    }
+
+    span{
+        font-size: 1rem;
+        color: var(--text-title);
+    }
+
+    &:hover{
+        border-color: ${darken(0.1, "#d7d7d7")}
     }
 
 

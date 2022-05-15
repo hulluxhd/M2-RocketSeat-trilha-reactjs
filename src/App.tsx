@@ -6,6 +6,7 @@ import { createServer } from "miragejs";
 
 import { useState } from "react";
 import NewTransactionModal from "./components/NewTransactionModal";
+import Modal from "react-modal"
 
 function App() {
   // configurando miragejs
@@ -20,14 +21,14 @@ function App() {
             title: "websites",
             amount: "1200",
             type: "deposit",
-            category: "services",
+            category: "Services",
             createdAt: new Date(),
           },
           {
             id: 2,
             title: "Renda passiva",
             amount: "800",
-            type: "deposit",
+            type: "Deposit",
             category: "misc",
             createdAt: new Date(),
           },
@@ -45,6 +46,7 @@ function App() {
   });
 
   // configurações modal
+  Modal.setAppElement('#root');
   const [isModalNewTransactionOpen, setIsModalNewTransactionOpen] =
     useState(false);
 
