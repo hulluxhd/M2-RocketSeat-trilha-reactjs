@@ -1,4 +1,4 @@
-import { createContext, ReactNode, TrackHTMLAttributes, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { api } from "../services/api/api";
 
 export const TransactionsContext = createContext<TransactionContextData>({} as TransactionContextData);
@@ -12,7 +12,6 @@ interface TransactionContextProviderProps {
 interface TransactionContextData {
     transactions: Transaction[],
     newTransaction: (transaction: newTransactionInfo) => Promise<void>
-
 }
 
 
@@ -28,16 +27,13 @@ interface Transaction {
 // funcionalidade do TS que omite os atributos de outra interface
 type newTransactionInfo = Omit<Transaction, "id" | "createdAt">
 
-// função que cadastra uma nova transação
-
-
-
 function TransactionContextProvider({
   children,
 }: TransactionContextProviderProps) {
-
+  
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-
+  
+  // função que cadastra uma nova transação
   async function newTransaction(obj: newTransactionInfo){
 
     const {data} = await api.post("/transactions", {...obj, createdAt: new Date()})
@@ -62,3 +58,9 @@ function TransactionContextProvider({
 }
 
 export default TransactionContextProvider;
+
+export function useTransaction() {
+  const context = useContext(TransactionsContext)
+
+  return context;
+}

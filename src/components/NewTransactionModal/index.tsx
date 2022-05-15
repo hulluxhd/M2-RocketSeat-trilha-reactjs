@@ -7,8 +7,8 @@ import {
 import close from "../../assets/close.svg";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
-import { FormEvent, useContext, useState } from "react";
-import { TransactionsContext } from "../../contexts/TransactionsContext";
+import { FormEvent, useState } from "react";
+import { useTransaction } from "../../contexts/TransactionsContext";
 
 interface NewTransactionModalProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ function NewTransactionModal({
   const [value, setValue] = useState(0);
   const [title, setTitle] = useState("");
 
-  const {newTransaction} = useContext(TransactionsContext)
+  const {newTransaction} = useTransaction()
 
   async function handleNewTransaction(e: FormEvent) {
     e.preventDefault()
