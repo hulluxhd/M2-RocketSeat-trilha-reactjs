@@ -1,51 +1,54 @@
-import styled from "styled-components";
 import Header from "./components/Header";
 import { GlobalStyle } from "./styles/global";
 import Dashboard from "./components/Dashboard";
-import { createServer } from "miragejs";
+import { createServer, Model } from "miragejs";
 
 import { useState } from "react";
 import NewTransactionModal from "./components/NewTransactionModal";
 import Modal from "react-modal"
 
+
 function App() {
   // configurando miragejs
+  
 
   createServer({
+    models: {
+      transaction: Model
+    },
+
+    seeds(server) {
+      server.db.loadData({
+        transactions: [
+          {
+            id: 1,
+            title: "Ganhei um real",
+            type: "deposit",
+            amount: 1,
+            category: "dev",
+            createdAt: new Date("2022-01-10")
+          }
+        ]
+      })
+    },
+
     routes() {
       this.namespace = "api";
       this.get("/transactions", () => {
-        return [
-          {
-            id: 1,
-            title: "websites",
-            amount: "1200",
-            type: "deposit",
-            category: "Services",
-            createdAt: new Date(),
-          },
-          {
-            id: 2,
-            title: "Renda passiva",
-            amount: "800",
-            type: "Deposit",
-            category: "misc",
-            createdAt: new Date(),
-          },
-          {
-            id: 3,
-            title: "Home",
-            amount: "3000",
-            type: "withdrawal",
-            category: "Rent",
-            createdAt: new Date(),
-          },
-        ];
+        return this.schema.all("transaction")
       });
-    },
-  });
+      this.post("/transactions", (schema, request) => {
+        const data = JSON.parse(request.requestBody)
 
-  // configurações modal
+        return schema.create("transaction", data)
+      });
+      
+    },
+  })
+
+
+
+    // configurações modal
   Modal.setAppElement('#root');
   const [isModalNewTransactionOpen, setIsModalNewTransactionOpen] =
     useState(false);

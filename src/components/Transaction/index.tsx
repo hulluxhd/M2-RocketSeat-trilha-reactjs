@@ -1,5 +1,6 @@
 interface TransactionProps {
   transaction: {
+    id: number;
     title: string;
     amount: string;
     type: string

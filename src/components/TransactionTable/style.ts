@@ -16,14 +16,14 @@ margin-top:4rem;
     }
 
     tr{
-        border-radius: 1rem;
+        border-radius: 0.25rem;
         background: var(--shape);
     }
     
     td{
         border: 0;
         color: var(--text-body);
-        border-radius: 1rem;
+        
         padding: 1rem 2rem;
         
         &:first-child{

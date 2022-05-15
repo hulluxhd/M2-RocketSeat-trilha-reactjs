@@ -8,12 +8,13 @@ function TransactionTable() {
     const [transactions, setTransactions] = useState([])
 
     useEffect(()=>{
-        async function a(){
+        async function gettinDataFromAPI(){
             await api.get("/transactions")
-            .then(response => setTransactions(response.data))
+                .then(response => setTransactions(response.data.transactions))
+            console.log(transactions[0])
         }
-        a()
-        console.log(transactions)
+        gettinDataFromAPI()
+      
  
     }, [])
 
@@ -29,7 +30,7 @@ function TransactionTable() {
             </thead>
             <tbody>
                 {transactions.map(transaction => 
-                <Transaction transaction={transaction}/>)}
+                <Transaction key={transaction} transaction={transaction}/>)}
             </tbody>
         </table>
         </Container>
