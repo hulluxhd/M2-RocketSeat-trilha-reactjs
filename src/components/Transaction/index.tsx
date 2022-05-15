@@ -2,7 +2,7 @@ interface TransactionProps {
   transaction: {
     id: number;
     title: string;
-    amount: string;
+    amount: number;
     type: string
     category: string;
     createdAt: Date;
@@ -15,9 +15,14 @@ function Transaction(props: TransactionProps) {
   return (
     <tr>
       <td>{title}</td>
-      <td className={type}>{type !== "deposit" ? "-" : null}R${amount}</td>
+      <td className={type}>{type !== "deposit" ? "-" : null}{
+        new Intl.NumberFormat('pt-BR', {
+          style: "currency",
+          currency: "BRL"
+        }).format(amount)
+      }</td>
       <td>{category}</td>
-      <td>{createdAt.toString().split("T")[0]}</td>
+      <td>{new Intl.DateTimeFormat("pt-BR").format(new Date(createdAt))}</td>
     </tr>
   );
 }

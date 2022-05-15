@@ -33,7 +33,7 @@ margin-top:4rem;
         &.deposit{
             color: var(--green);
         }
-        &.withdrawal{
+        &.withdrawl{
             color: var(--red);
         }
     }

@@ -2,7 +2,14 @@ import { Container } from "./style";
 import income from "../../assets/income.svg"
 import outcome from "../../assets/outcome.svg"
 import total from "../../assets/total.svg"
+import { useContext } from "react";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 function Summary() {
+
+    const {transactions} = useContext(TransactionsContext)
+
+    const entradas = 0;
+
     return ( 
         <Container>
             <div>
@@ -10,7 +17,9 @@ function Summary() {
                     <p>Entradas</p>
                     <img src={income} alt="entradas"/>
                 </header>
-                <strong>R$1000,00</strong>
+                <strong>{transactions.forEach(transaction =>{
+                    transaction.type === "deposit" ? entradas += transaction.amount : null
+                })}</strong>
             </div>
             <div>
                 <header>

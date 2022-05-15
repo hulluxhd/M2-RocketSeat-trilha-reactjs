@@ -1,22 +1,12 @@
-import { useEffect, useState } from "react";
-import { api } from "../../services/api/api";
+
+import { useContext } from "react";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 import Transaction from "../Transaction";
 import { Container } from "./style";
 
 function TransactionTable() {
 
-    const [transactions, setTransactions] = useState([])
-
-    useEffect(()=>{
-        async function gettinDataFromAPI(){
-            await api.get("/transactions")
-                .then(response => setTransactions(response.data.transactions))
-            console.log(transactions[0])
-        }
-        gettinDataFromAPI()
-      
- 
-    }, [])
+    const {transactions} = useContext(TransactionsContext)
 
 
     return ( 
@@ -30,7 +20,7 @@ function TransactionTable() {
             </thead>
             <tbody>
                 {transactions.map(transaction => 
-                <Transaction key={transaction} transaction={transaction}/>)}
+                <Transaction key={transaction.id} transaction={transaction}/>)}
             </tbody>
         </table>
         </Container>
